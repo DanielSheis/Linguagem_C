@@ -1,0 +1,8 @@
+Nome: "Daniel"
+Fruta preferida: "Morango"
+Namorada: "Thatiane"
+Idade: "22"
+Tamanho do sol: "1.392.700 km"
+Comida preferida: "Pizza"
+Carro: "bugatti"
+Cor preferida: "preto, vermelho e roxo"
