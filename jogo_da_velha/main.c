@@ -6,30 +6,50 @@ char tabuleiro[3][3] = { {'-', '-', '-'},
 
 void marcarTabuleiro(int linha, int coluna, int jogador);
 void imprimirTabuleiro();
+int verificarTabuleiro(int jogador);
+_Bool espacoVazio();
 
 int main(void)
 {
-    int linha, coluna, jogador = 1;
+    printf("=============================\n");
+    printf("        Jogo da velha\n");
+    printf("=============================\n");
 
-    do
+    while (1)
     {
-        printf("JOGADOR %i:\n", jogador);
+        int linha, coluna, jogador = 1;
 
-        printf("Digite a linha: ");
-        scanf("%i", &linha);
+        do
+        {
+            printf("JOGADOR %i:\n", jogador);
 
-        printf("Digite a coluna: ");
-        scanf("%i", &coluna);
+            printf("Digite a linha: ");
+            scanf("%i", &linha);
 
-        marcarTabuleiro(linha, coluna, jogador);
+            printf("Digite a coluna: ");
+            scanf("%i", &coluna);
 
-        ++jogador;
+            --linha;
+            --coluna;
+
+            marcarTabuleiro(linha, coluna, jogador);
+            imprimirTabuleiro();
+
+            if (verificarTabuleiro(jogador))
+            {
+                return 0;
+            }
+
+            if (espacoVazio() == 1)
+            {
+                printf("Jogo empatado\n");
+                return 1;
+            }
+
+            ++jogador;
+        }
+        while(jogador <= 2);
     }
-    while(jogador <= 2);
-
-    imprimirTabuleiro();
-
-    return 0;
 }
 
 void marcarTabuleiro(int linha, int coluna, int jogador)
@@ -83,7 +103,77 @@ void imprimirTabuleiro()
     }
 }
 
-int verificarTabuleiro()
+int verificarTabuleiro(int jogador)
 {
-    
+    char resultadoFlutuante;
+    int resultado = 0;
+
+    if (jogador == 1)
+    {
+        resultadoFlutuante = 'X';
+    }
+    else
+    {
+        resultadoFlutuante = '0';
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+
+        // Confere as linhas horizontal
+        if (tabuleiro[i][0] == resultadoFlutuante && tabuleiro[i][1] == resultadoFlutuante && tabuleiro[i][2] == resultadoFlutuante)
+        {
+            printf("Jogador %c ganhou\n", resultadoFlutuante);
+            return 1;
+        }
+
+        // Confere as linhas transversais da esquerda para direita
+        if (tabuleiro[0][0] == resultadoFlutuante && tabuleiro[1][1] == resultadoFlutuante && tabuleiro[2][2] == resultadoFlutuante)
+        {
+            printf("Jogador %c ganhou\n", resultadoFlutuante);
+            return 1;
+        }
+
+        // Confere as linhas transversais da direita para esquerda
+        if (tabuleiro[0][2] == resultadoFlutuante && tabuleiro[1][1] == resultadoFlutuante && tabuleiro[2][0] == resultadoFlutuante)
+        {
+            printf("Jogador %c ganhou\n", resultadoFlutuante);
+            return 1;
+        }
+
+        // confere as linhas verticais
+        for (int k = 0; k < 3; k++)
+        {
+            if (tabuleiro[k][i] == resultadoFlutuante)
+            {
+                ++resultado;
+            }
+
+            if (resultado == 3)
+            {
+                printf("Jogador %c ganhou\n", resultadoFlutuante);
+                return 1;
+            }
+        }
+
+        resultado = 0;  
+    }
+
+    return 0;
+}
+
+_Bool espacoVazio()
+{
+    for (int i = 0; i < 3; i++)
+    {
+        for (int k = 0; k < 3; k++)
+        {
+            if (tabuleiro[i][k] == '-')
+            {
+                return 0;
+            }
+        }
+    }
+
+    return 1;
 }
